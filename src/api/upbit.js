@@ -1,14 +1,18 @@
-const axios = require('axios');
-const uuid = require("uuid")
-const sign = require('jsonwebtoken').sign
+import axios from 'axios';
+import { v4 } from 'uuid';
+import jwt from 'jsonwebtoken';
+import qs from 'qs';
 
-const access_key = process.env.UPBIT_OPEN_API_ACCESS_KEY
-const secret_key = process.env.UPBIT_OPEN_API_SECRET_KEY
-const server_url = process.env.UPBIT_OPEN_API_SERVER_URL
+const sign = jwt.sign;
+
+const access_key = process.env.UPBIT_OPEN_API_ACCESS_KEY;
+const secret_key = process.env.UPBIT_OPEN_API_SECRET_KEY;
+const server_url = process.env.UPBIT_OPEN_API_SERVER_URL;
+const notice_url = process.env.UPBIT_NOTICE_API_SERVER_URL;
 
 const payload = {
     access_key: access_key,
-    nonce: uuid.v4(),
+    nonce: v4(),
 }
 
 const token = sign(payload, secret_key)
@@ -16,11 +20,12 @@ const token = sign(payload, secret_key)
 const options = {
     method: "GET",
     headers: {Authorization: `Bearer ${token}`},
+    paramsSerializer: function (params) {
+        return qs.stringify(params, {arrayFormat: 'brackets'})
+    },
 }
 
-const upbitApi = axios.create({
+export const upbitApi = axios.create({
     baseURL: server_url,
     ...options
 });
-
-module.exports = upbitApi;

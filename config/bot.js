@@ -1,3 +1,4 @@
+require('dotenv').config();
 module.exports = {
     SLACK_APP_ID: process.env.SLACK_APP_ID,
     SLACK_CLIENT_ID: process.env.SLACK_CLIENT_ID,
