@@ -4,8 +4,8 @@ var router = express.Router();
 var axios = require('axios');
 const schedule = require('node-schedule');
 
-const upbitApi = require('../api/upbit');
-const slackApi = require('../api/slack');
+const upbitApi = require('../src/api/upbit');
+const slackApi = require('../src/api/slack');
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -17,54 +17,54 @@ router.get('/', async function(req, res, next) {
 });
 
 router.get('/coin', async function(req, res, next) {
-  const blocks = [
-    {
-      "type": "header",
-      "text": {
-        "type": "plain_text",
-        "text": "New request"
-      }
-    },
-    {
-      "type": "section",
-      "fields": [
-        {
-          "type": "mrkdwn",
-          "text": "*Type:*\nPaid Time Off"
-        },
-        {
-          "type": "mrkdwn",
-          "text": "*Created by:*\n<example.com|Fred Enriquez>"
-        }
-      ]
-    },
-    {
-      "type": "section",
-      "fields": [
-        {
-          "type": "mrkdwn",
-          "text": "*When:*\nAug 10 - Aug 13"
-        }
-      ]
-    },
-    {
-      "type": "section",
-      "text": {
-        "type": "mrkdwn",
-        "text": "<https://example.com|View request>"
-      }
-    }
-  ]
-
-  const { data } = await upbitApi.get('/v1/accounts');
-
-  console.log(data)
+  // const blocks = [
+  //   {
+  //     "type": "header",
+  //     "text": {
+  //       "type": "plain_text",
+  //       "text": "New request"
+  //     }
+  //   },
+  //   {
+  //     "type": "section",
+  //     "fields": [
+  //       {
+  //         "type": "mrkdwn",
+  //         "text": "*Type:*\nPaid Time Off"
+  //       },
+  //       {
+  //         "type": "mrkdwn",
+  //         "text": "*Created by:*\n<example.com|Fred Enriquez>"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     "type": "section",
+  //     "fields": [
+  //       {
+  //         "type": "mrkdwn",
+  //         "text": "*When:*\nAug 10 - Aug 13"
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     "type": "section",
+  //     "text": {
+  //       "type": "mrkdwn",
+  //       "text": "<https://example.com|View request>"
+  //     }
+  //   }
+  // ]
+  //
+  // const { data } = await upbitApi.get('/v1/accounts');
+  //
+  // console.log(data)
 
   // const job = schedule.scheduleJob('*/5 * * * * *', async function(){
   //   await axios.post(process.env.SLACK_WEBHOOK_URL, { "text": "Hello, World!", blocks })
   //   console.log('The answer to life, the universe, and everything!');
   // });
-  // await axios.post(process.env.SLACK_WEBHOOK_URL, { "text": "하락에 대비하라" })
+  await axios.post(process.env.SLACK_WEBHOOK_URL, { "text": "공부해라 옹박!!!!" })
   res.send('ok');
 });
 
