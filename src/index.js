@@ -3,13 +3,27 @@ import { createEventAdapter } from '@slack/events-api';
 import { createServer } from 'http';
 import CONFIG from '../config/bot';
 import indexRouter from './routes/index';
+import mongoose from 'mongoose';
 
 const app = express();
 const slackEvents = createEventAdapter(CONFIG.SLACK_SIGNING_SECRET);
+const db = mongoose.connection;
+
+mongoose.connect(process.env.MONGO_DB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+db.on('error', () => {
+    console.log('db connection error');
+});
+db.once('open', () => {
+    console.log('db connected');
+});
 
 // 메시지 이벤트 구독하기
 slackEvents.on('message', async (event) => {
-  console.log(event);
+    console.log(event);
 });
 
 app.use('/', indexRouter);
@@ -23,6 +37,7 @@ app.use('/slack/events', slackEvents.requestListener());
 // });
 
 // express 웹 서버 실행
+<<<<<<< HEAD
 createServer(app).listen(3000, () => {
   console.log('run slack bot');
 });

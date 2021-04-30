@@ -1,14 +1,23 @@
-import fs from 'fs';
-import upbitApi from '../api/upbit';
+import { upbitApi } from '../api/upbit';
+import Market from '../model/Markets';
 
-class UpbitService {
-  writeMarketAll = async () => {
-    const { data } = await upbitApi.get('/v1/accounts');
-  }
+const insertAllMarkets = async () => {
+    const { data } = await upbitApi.get('/v1/market/all', {
+        params: { isDetails: true },
+    });
 
-  getCurrentPrices = async () => {
+    const docs = data.map((market) => {
+        return {
+            name: market.korean_name,
+            market: market.market,
+            market_warning: market.market_warning,
+        };
+    });
 
-  }
-}
+    await Market.insertMany(docs);
+    return docs;
+};
 
-export default UpbitService;
+export default {
+    insertAllMarkets,
+};
