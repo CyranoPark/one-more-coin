@@ -37,7 +37,6 @@ app.use('/slack/events', slackEvents.requestListener());
 // });
 
 // express 웹 서버 실행
-<<<<<<< HEAD
 createServer(app).listen(3000, () => {
   console.log('run slack bot');
 });
