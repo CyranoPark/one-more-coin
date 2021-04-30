@@ -13,19 +13,37 @@ const notice_url = process.env.UPBIT_NOTICE_API_SERVER_URL;
 const payload = {
     access_key: access_key,
     nonce: v4(),
-}
+};
 
-const token = sign(payload, secret_key)
+const token = sign(payload, secret_key);
 
 const options = {
-    method: "GET",
-    headers: {Authorization: `Bearer ${token}`},
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
     paramsSerializer: function (params) {
-        return qs.stringify(params, {arrayFormat: 'brackets'})
+        return qs.stringify(params, { arrayFormat: 'brackets' });
     },
-}
+};
 
 export const upbitApi = axios.create({
     baseURL: server_url,
-    ...options
+    ...options,
+});
+
+upbitApi.interceptors.request.use((config) => {
+    const { url, method, headers, baseURL } = config;
+    console.log({
+        url,
+        method,
+        headers,
+        baseURL,
+    });
+
+    return config;
+});
+
+upbitApi.interceptors.response.use(function (res) {
+    const { data, status, statusText } = res;
+    console.log({ data, status, statusText });
+    return res;
 });
