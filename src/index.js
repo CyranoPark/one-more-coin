@@ -3,9 +3,12 @@ import { createEventAdapter } from '@slack/events-api';
 import { createServer } from 'http';
 import CONFIG from '../config/bot';
 import indexRouter from './routes/index';
+import mongoose from 'mongoose';
 
 const app = express();
 const slackEvents = createEventAdapter(CONFIG.SLACK_SIGNING_SECRET);
+
+mongoose.connect(process.env.MONGO_DB_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 // 메시지 이벤트 구독하기
 slackEvents.on('message', async (event) => {
