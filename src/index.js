@@ -12,10 +12,9 @@ slackEvents.on('message', async (event) => {
   console.log(event);
 });
 
+app.use('/', indexRouter);
 // 메지지 이벤트 엔드포인트를 express 에 등록하기
 app.use('/slack/events', slackEvents.requestListener());
-
-app.use('/', indexRouter);
 
 //
 // app.get('/slack/message', async function(req, res, next) {
@@ -24,6 +23,6 @@ app.use('/', indexRouter);
 // });
 
 // express 웹 서버 실행
-createServer(app).listen(4000, () => {
+createServer(app).listen(3000, () => {
   console.log('run slack bot');
 });
