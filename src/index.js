@@ -3,6 +3,7 @@ import { createEventAdapter } from '@slack/events-api';
 import { createServer } from 'http';
 import CONFIG from '../config/bot';
 import indexRouter from './routes/index';
+import upbitRouter from './routes/upbit';
 import mongoose from 'mongoose';
 
 const app = express();
@@ -27,6 +28,7 @@ slackEvents.on('message', async (event) => {
 });
 
 app.use('/', indexRouter);
+app.use('/upbit', upbitRouter);
 // 메지지 이벤트 엔드포인트를 express 에 등록하기
 app.use('/slack/events', slackEvents.requestListener());
 
@@ -38,5 +40,5 @@ app.use('/slack/events', slackEvents.requestListener());
 
 // express 웹 서버 실행
 createServer(app).listen(3000, () => {
-  console.log('run slack bot');
+    console.log('run slack bot');
 });

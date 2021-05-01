@@ -44,6 +44,6 @@ upbitApi.interceptors.request.use((config) => {
 
 upbitApi.interceptors.response.use(function (res) {
     const { data, status, statusText } = res;
-    console.log({ data, status, statusText });
+    // console.log({ data, status, statusText });
     return res;
 });
