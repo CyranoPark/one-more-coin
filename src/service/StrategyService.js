@@ -8,10 +8,19 @@ class StrategyService {
             params: { market, count: 200 },
         });
 
+        const volumes = data.map((item) => {
+            return {
+                low: item.low_price,
+                high: item.high_price,
+                open: item.opening_price,
+                trade: item.trade_price,
+                volume: item.opening_price - item.trade_price,
+            };
+        });
+
         console.log(data);
-        return data;
+        return volumes;
     };
-    volatilityBreakout;
 }
 
 export default new StrategyService();
