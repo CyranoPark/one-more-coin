@@ -17,13 +17,15 @@ export const insertAllMarkets = async () => {
         params: { isDetails: true },
     });
 
-    const docs = data.map((market) => {
-        return {
-            name: market.korean_name,
-            market: market.market,
-            market_warning: market.market_warning,
-        };
-    });
+    const docs = data
+        .filter((item) => item.market.startsWith('KRW'))
+        .map((market) => {
+            return {
+                name: market.korean_name,
+                market: market.market,
+                market_warning: market.market_warning,
+            };
+        });
 
     await Market.insertMany(docs);
     return docs;

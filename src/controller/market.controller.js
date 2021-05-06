@@ -1,5 +1,6 @@
 import UpbitService from '../service/UpbitService';
 import axios from 'axios';
+import StrategyService from '../service/StrategyService';
 
 export const insertAllMarkets = async (req, res, next) => {
     try {
@@ -54,6 +55,16 @@ export const getBuyPointByMarket = async (req, res, next) => {
         const { minutes } = req.query;
         const candles = await UpbitService.getCurrentBuyPoint(minutes);
         res.send(candles);
+    } catch (e) {
+        next(e);
+    }
+};
+
+export const getVolatilityBreakoutPoints = async (req, res, next) => {
+    try {
+        const { minutes, market } = req.query;
+        const points = await StrategyService.getVolatilityList(market, minutes);
+        res.send(points);
     } catch (e) {
         next(e);
     }
