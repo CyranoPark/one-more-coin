@@ -5,6 +5,7 @@ import CONFIG from '../config/bot';
 import indexRouter from './routes/index';
 import upbitRouter from './routes/upbit';
 import mongoose from 'mongoose';
+// import './socket';
 
 const app = express();
 const slackEvents = createEventAdapter(CONFIG.SLACK_SIGNING_SECRET);
